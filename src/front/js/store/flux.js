@@ -50,23 +50,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 
 			// FUNCION LOGIN:
-			login: async (data) => {
-				let store = getStore();
+			getLogin: async (data) => {
+				const store = getStore();
 
 				try {
-					let response = await fetch(`${process.env.BACKEND_URL}`, {
+					let response = await fetch(`${process.env.BACKEND_URL}/login`, {
+						method: "POST",
 						headers: {
-							"Content-Type" : "application/json",
-						}
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify(data)
 					});
-
+					console.log(response);
 
 				} catch (error) {
 					console.log(error);
 				}
 
+			}
 		}
 	};
-};
+}
 
 export default getState;

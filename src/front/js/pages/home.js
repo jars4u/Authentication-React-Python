@@ -22,7 +22,8 @@ export const Home = () => {
 	};
 
 	const handleLogin = (data) => {
-		console.log(data)
+		// console.log(data)
+		actions.getLogin() 							//FUNCION DEL FLUX
 
 	}
 
