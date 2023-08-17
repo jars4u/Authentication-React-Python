@@ -9,7 +9,7 @@ from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash
 from base64 import b64encode
 import os
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 api = Blueprint('api', __name__)
 
@@ -72,8 +72,19 @@ def handle_login():
 
 # OBTENER USUARIOS:
 @api.route('/register', methods=['GET'])
+@jwt_required()
 def get_registered():
     if request.method == 'GET':
-        registered = User.query.all()
+        # UN UNICO USUARIO PUEDE HACER LA CONSULTA:
+        user = User.query.get(get_jwt_identity())
+        
+        if user.email == "jars4u2@gmail.com":
+            registered = User.query.all()
+            return jsonify(list(map(lambda item: item.serialize(), registered)))
+        else:
+            return jsonify ({"message" : "No authenticated"}), 401
 
-        return jsonify(list(map(lambda item: item.serialize(), registered)))
+
+        # CUALQUIERA PUEDE HACER LA CONSULTA PERO DEBE ESTAR LOGGED:
+        # registered = User.query.all()
+        # return jsonify(list(map(lambda item: item.serialize(), registered)))

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
@@ -6,21 +6,67 @@ import "../../styles/home.css";
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
+	const [login, setLogin] = useState(
+		{
+			email: "",
+			password: "",
+		}
+	);
+
+	const handleChange = ({ target }) => {
+		setLogin({
+			...login,
+			[target.name]: target.value
+		});
+
+	};
+
+	const handleLogin = (data) => {
+		console.log(data)
+
+	}
+
+
+
+
+
 	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
+		<div className="container mt-5">
+			<div className="row justify-content-center">
+				<div className="col-12 col-md-6 border border-1 p-5 rounded-3">
+					<form className="login_form">
+						<div>
+							<label htmlFor="exampleInputEmail1" className="form-label">Email</label>
+							<input
+								className="form-control"
+								type="email"
+								id="exampleInputEmail1"
+								aria-describedby="emailHelp"
+								name="email"
+								onChange={handleChange}
+								placeholder="Ingresa el email" />
+						</div>
+						<div className="my-3">
+							<label htmlFor="exampleInputPassword1" className="form-label">Password</label>
+							<input
+								className="form-control"
+								type="password"
+								id="exampleInputPassword1"
+								name="password"
+								onChange={handleChange}
+								placeholder="Ingresa el password" />
+						</div>
+						<div>
+							<button
+								className="btn btn-success w-100"
+								type="button"
+								onClick={() => handleLogin(login)}>
+								<strong>Login</strong>
+							</button>
+						</div>
+					</form>
+				</div>
 			</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://start.4geeksacademy.com/starters/react-flask">
-					Read documentation
-				</a>
-			</p>
 		</div>
 	);
 };
