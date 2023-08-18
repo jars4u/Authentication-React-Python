@@ -53,8 +53,9 @@ def handle_login():
         email = body.get('email', None)
         password = body.get('password', None)
 
+        print("a")
         if email is None or password is None:
-            return  jsonify("Bad Credentials"), 400
+            return  jsonify({"message" : "Bad Credentials"}), 400
 
         else:
             user = User.query.filter_by(email=email).one_or_none()

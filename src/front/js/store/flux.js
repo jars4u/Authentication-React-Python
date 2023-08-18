@@ -54,14 +54,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 
 				try {
-					let response = await fetch(`${process.env.BACKEND_URL}/login`, {
+					let response = await fetch("https://3001-jars4u-authenticationre-i0f8wdv389g.ws-us104.gitpod.io/api/login", {
+					// let response = await fetch(`${process.env.BACKEND_URL}/login`, {
+
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json",
 						},
 						body: JSON.stringify(data)
 					});
-					console.log(response);
+					let dataToken = await response.json();
+					// console.log(dataToken);
+					// console.log(response);
+					setStore({
+						token: dataToken.token,
+					});
+					localStorage.setItem("token", dataToken.token);
 
 				} catch (error) {
 					console.log(error);
