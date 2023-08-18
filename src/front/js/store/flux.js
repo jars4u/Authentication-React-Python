@@ -15,6 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			],
 			token: null,
+			registered: false,
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -54,8 +55,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const store = getStore();
 
 				try {
-					// let response = await fetch("https://3001-jars4u-authenticationre-1cderhmg6ba.ws-us104.gitpod.io/api/login", {
-					let response = await fetch(`${process.env.BACKEND_URL}/login`, {
+					let response = await fetch("https://3001-jars4u-authenticationre-1cderhmg6ba.ws-us104.gitpod.io/api/login", {
+						// let response = await fetch(`${process.env.BACKEND_URL}/login`, {
 
 						method: "POST",
 						headers: {
@@ -75,7 +76,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(error);
 				}
 
-			}
+			},
+
+			// FUNCION REGISTER:
+			getRegister: async (data) => {
+				const store = getStore()
+
+				try {
+					let response = await fetch("https://3001-jars4u-authenticationre-1cderhmg6ba.ws-us104.gitpod.io/api/register", {
+					// let response = await fetch(`${process.env.BACKEND_URL}/register`, {
+						method: "POST",
+						headers: {
+							"Content-type": "application/json"
+						},
+						body: JSON.stringify(data)
+					})
+					setStore({
+						registered: true
+					})
+					console.log("User Registered")
+
+				} catch (err) {
+					console.log(err)
+				}
+			},
+
 		}
 	};
 }

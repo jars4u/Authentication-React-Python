@@ -24,25 +24,24 @@ def check_password(hash_password, password, salt):
 @api.route('/register', methods=['POST'])
 def register_user():
     if request.method == 'POST':
-        body = request.json
-        email = body.get('email', None)
-        password = body.get('password', None)
+        data = request.json
+        email = data.get("email", None)
+        password = data.get("password", None)
 
-        if email is None or password is None:
-            return jsonify("Bad credentials")
+    if email is None or password is None:
+            return jsonify({"message" : "Bad Credentials"}), 400
+    else:
+        salt = b64encode(os.urandom(32)).decode('utf-8')
+        password = set_password(password, salt)
+        user = User(email=email, password=password, salt=salt)
+        db.session.add(user)
+        try:
+            db.session.commit()
+            return jsonify({"message": "User created"}), 201
+        except Exception as err:
+            db.session.rollback()
+            return jsonify({"message": f"error: {err.args}"}), 500
 
-        else:
-            salt = b64encode(os.urandom(32)).decode('utf-8')
-            password = set_password(password, salt)
-            user = User(email=email, password=password, salt=salt)
-            db.session.add(user)
-            try:
-                db.session.commit()
-                return jsonify({"message" : "User created"}), 201
-            except Exception as err:
-                print(err.args)
-                db.session.rollback()
-                return jsonify({"message" : "f'error: {err.args}"}), 500
 
 
 # INGRESO DE USUARIO:
@@ -53,7 +52,6 @@ def handle_login():
         email = body.get('email', None)
         password = body.get('password', None)
 
-        print("a")
         if email is None or password is None:
             return  jsonify({"message" : "Bad Credentials"}), 400
 
