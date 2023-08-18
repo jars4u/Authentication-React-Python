@@ -1,9 +1,14 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
+
 
 export const Register = () => {
     const { store, actions } = useContext(Context);
+    const navigate = useNavigate();
+
 
     const [user, setUser] = useState(
         {
@@ -21,8 +26,10 @@ export const Register = () => {
     };
 
     const handleRegister = (data) => {
-
+        
         actions.getRegister(data);
+        navigate('/');
+
 
     }
 
@@ -31,10 +38,12 @@ export const Register = () => {
         <div className="container mt-5">
             <div className="row justify-content-center">
                 <div className="col-12 col-md-6 border border-1 p-5 rounded-3">
+                    
                     <form className="Register_form">
                         <div>
                             <label htmlFor="email" className="form-label">Email</label>
                             <input
+                                required
                                 className="form-control"
                                 type="email"
                                 id="email"
@@ -43,9 +52,11 @@ export const Register = () => {
                                 onChange={handleChange}
                                 placeholder="Ingresa el email" />
                         </div>
+
                         <div className="my-3">
                             <label htmlFor="password" className="form-label">Password</label>
                             <input
+                                required
                                 className="form-control"
                                 type="password"
                                 id="password"
@@ -56,7 +67,7 @@ export const Register = () => {
                         <div>
                             <button
                                 className="btn btn-primary w-100"
-                                type="button"
+                                type="submit"
                                 onClick={() => handleRegister(user)}>
                                 <strong>Register</strong>
                             </button>

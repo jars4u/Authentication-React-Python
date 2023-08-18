@@ -3,9 +3,11 @@ import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
 	const { store, actions } = useContext(Context);
+	const navigate = useNavigate();
 
 	const [login, setLogin] = useState(
 		{
@@ -24,7 +26,8 @@ export const Login = () => {
 
 	const handleLogin = (data) => {
 		// console.log(data)
-		actions.getLogin(data) 							//FUNCION DEL FLUX
+		actions.getLogin(data)
+		navigate('/private')
 
 	}
 

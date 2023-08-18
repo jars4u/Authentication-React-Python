@@ -16,6 +16,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			],
 			token: null,
 			registered: false,
+			login: false,
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -69,6 +70,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log(response);
 					setStore({
 						token: dataToken.token,
+						login: true,
 					});
 					localStorage.setItem("token", dataToken.token);
 
@@ -84,7 +86,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				try {
 					let response = await fetch("https://3001-jars4u-authenticationre-1cderhmg6ba.ws-us104.gitpod.io/api/register", {
-					// let response = await fetch(`${process.env.BACKEND_URL}/register`, {
+						// let response = await fetch(`${process.env.BACKEND_URL}/register`, {
 						method: "POST",
 						headers: {
 							"Content-type": "application/json"
