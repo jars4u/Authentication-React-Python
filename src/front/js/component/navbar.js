@@ -1,17 +1,29 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
+	const { store, actions } = useContext(Context)
+	const navigate = useNavigate()
+
+	const handleLogout = () => {
+		actions.logout();
+		navigate('/')
+
+	}
+
 	return (
 		<nav className="navbar navbar-light bg-light">
-			<div className="container">
+			<div className="container-fluid mx-2">
 				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
+					<span className="navbar-brand mb-0 h1">Authetication React Flask Project</span>
 				</Link>
 				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
+					<button
+						className="btn btn-danger"
+						onClick={() => handleLogout()}>
+						<strong>Logout</strong>
+					</button>
 				</div>
 			</div>
 		</nav>

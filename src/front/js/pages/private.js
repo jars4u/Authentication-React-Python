@@ -11,7 +11,7 @@ export const Private = () => {
         <>
             <div className="container">
 
-                {store.login
+                {store.token != null
                     ?
                     <div className="text-center mt-5">
                         <h1><strong>Congratulations!</strong></h1>
